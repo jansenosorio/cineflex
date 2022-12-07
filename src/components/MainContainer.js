@@ -11,10 +11,10 @@ const MainContainer = () => {
       <Header>
         <Logo />
       </Header>
-      <FilmList />
+      {/* <FilmList /> */}
       <FilmDate />
-      <SelectSeats />
-      <Resume />
+      {/* <SelectSeats />
+      <Resume /> */}
     </Container>
   )
 }
@@ -34,7 +34,7 @@ const Header = styled.div`
   align-items: center;
   text-align: center;
   width: 100%;
-  height: 70px;
+  min-height: 70px;
   background-color: #c3cfd9;
   margin: 0 auto;
 `
