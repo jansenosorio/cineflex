@@ -1,25 +1,40 @@
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import axios from 'axios'
 
 const FilmList = () => {
+  useEffect(() => {
+    const promise = axios.get(
+      'https://mock-api.driven.com.br/api/v8/cineflex/movies'
+    )
+    promise.then(elm => setFilmList(elm.data))
+    promise.catch(() =>
+      console.log('Houve algum erro, favor recarregar a página')
+    )
+  })
+
+  const [filmList, setFilmList] = useState([])
+
   return (
-    <>
+    <Container>
       <Title>Selecione o Filme</Title>
 
       <List>
-        <img src="https://789d77d27f49a880d02e-714b7dc0b51e300a567fc89d2a0837e5.ssl.cf1.rackcdn.com/PaginaConteudo/depositphotos46976671xl-2015-copia.jpg"></img>
-        <img src="https://789d77d27f49a880d02e-714b7dc0b51e300a567fc89d2a0837e5.ssl.cf1.rackcdn.com/PaginaConteudo/depositphotos46976671xl-2015-copia.jpg"></img>
-        <img src="https://789d77d27f49a880d02e-714b7dc0b51e300a567fc89d2a0837e5.ssl.cf1.rackcdn.com/PaginaConteudo/depositphotos46976671xl-2015-copia.jpg"></img>
-        <img src="https://789d77d27f49a880d02e-714b7dc0b51e300a567fc89d2a0837e5.ssl.cf1.rackcdn.com/PaginaConteudo/depositphotos46976671xl-2015-copia.jpg"></img>
-        <img src="https://789d77d27f49a880d02e-714b7dc0b51e300a567fc89d2a0837e5.ssl.cf1.rackcdn.com/PaginaConteudo/depositphotos46976671xl-2015-copia.jpg"></img>
-        <img src="https://789d77d27f49a880d02e-714b7dc0b51e300a567fc89d2a0837e5.ssl.cf1.rackcdn.com/PaginaConteudo/depositphotos46976671xl-2015-copia.jpg"></img>
-        <img src="https://789d77d27f49a880d02e-714b7dc0b51e300a567fc89d2a0837e5.ssl.cf1.rackcdn.com/PaginaConteudo/depositphotos46976671xl-2015-copia.jpg"></img>
-        <img src="https://789d77d27f49a880d02e-714b7dc0b51e300a567fc89d2a0837e5.ssl.cf1.rackcdn.com/PaginaConteudo/depositphotos46976671xl-2015-copia.jpg"></img>
+        {filmList.map(elm => (
+          <div key={elm.id} data-test="movie">
+            <img src={elm.posterURL}></img>
+          </div>
+        ))}
       </List>
-    </>
+    </Container>
   )
 }
 
 export default FilmList
+
+const Container = styled.section`
+  width: 100%;
+`
 
 const Title = styled.div`
   font-family: 'Roboto', sans-serif;
@@ -32,13 +47,16 @@ const Title = styled.div`
   justify-content: center;
 `
 
-const List = styled.section`
+const List = styled.div`
   width: 100%;
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-
+  display: grid;
+  grid-template-columns: auto auto;
   padding-bottom: 100px;
+  justify-content: center;
+  div {
+    margin: 0 0;
+    padding: 0 0;
+  }
   img {
     box-sizing: border-box;
     gap: 20px;
@@ -48,5 +66,6 @@ const List = styled.section`
     margin: 11px 30px;
     box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.1);
     border-radius: 3px;
+    cursor: pointer;
   }
 `

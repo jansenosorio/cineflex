@@ -40,7 +40,7 @@ const Title = styled.div`
 `
 
 const BoxDateAndHours = styled.div`
-  width: 100%;
+  width: 90%;
   min-height: 110px;
   margin-left: 23px;
   margin-top: 23px;
