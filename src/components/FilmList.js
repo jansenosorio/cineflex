@@ -1,19 +1,23 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
+import { key } from 'localforage'
 
-const FilmList = () => {
+const FilmList = props => {
+  const [filmList, setFilmList] = useState([])
+
   useEffect(() => {
     const promise = axios.get(
       'https://mock-api.driven.com.br/api/v8/cineflex/movies'
     )
-    promise.then(elm => setFilmList(elm.data))
+    promise.then(elm => {
+      setFilmList(elm.data)
+    })
     promise.catch(() =>
       console.log('Houve algum erro, favor recarregar a página')
     )
   })
-
-  const [filmList, setFilmList] = useState([])
 
   return (
     <Container>
@@ -21,9 +25,11 @@ const FilmList = () => {
 
       <List>
         {filmList.map(elm => (
-          <div key={elm.id} data-test="movie">
-            <img src={elm.posterURL}></img>
-          </div>
+          <Link to={`/film-date/${elm.id}`}>
+            <div key={elm} data-test="movie">
+              <img src={elm.posterURL}></img>
+            </div>
+          </Link>
         ))}
       </List>
     </Container>

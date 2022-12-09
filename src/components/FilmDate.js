@@ -1,25 +1,46 @@
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import axios from 'axios'
+import { Link, useParams } from 'react-router-dom'
 
-const FilmDate = () => {
+const FilmDate = props => {
+  const { filmID } = useParams()
+  const [daysOfSession, setDaysOfSession] = useState([])
+  const [film, setFilm] = useState([])
+
+  useEffect(() => {
+    const promise = axios.get(
+      `https://mock-api.driven.com.br/api/v8/cineflex/movies/${filmID}/showtimes`
+    )
+    promise.then(elm => {
+      setDaysOfSession(elm.data.days)
+      setFilm(elm.data)
+    })
+  })
+
   return (
     <>
       <Title>Selecione o horário</Title>
-      <BoxDateAndHours>
-        <p>Quinta-feira - 24/06/2021</p>
-        <button>15:00</button>
-        <button>19:00</button>
-      </BoxDateAndHours>
-      <BoxDateAndHours>
-        <p>Quinta-feira - 24/06/2021</p>
-        <button>15:00</button>
-        <button>19:00</button>
-      </BoxDateAndHours>
-      <Footer>
+      {daysOfSession.map(elm => (
+        <BoxDateAndHours key={elm.id} data-test="movie-day">
+          <p>
+            {elm.weekday} - {elm.date}
+          </p>
+          {elm.showtimes.map(elm => (
+            <Link to={`/select-seats/${elm.id}`}>
+              <button key={elm.id} data-test="showtime">
+                {elm.name}
+              </button>
+            </Link>
+          ))}
+        </BoxDateAndHours>
+      ))}
+      <Footer data-test="footer">
         <div>
-          <img src="https://789d77d27f49a880d02e-714b7dc0b51e300a567fc89d2a0837e5.ssl.cf1.rackcdn.com/PaginaConteudo/depositphotos46976671xl-2015-copia.jpg"></img>
+          <img src={film.posterURL}></img>
         </div>
         <div>
-          <p>Enola Holmes</p>
+          <p>{film.title}</p>
         </div>
       </Footer>
     </>

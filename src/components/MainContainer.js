@@ -5,6 +5,7 @@ import Resume from './Resume'
 import styled from 'styled-components'
 import Logo from './Logo'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { useState } from 'react'
 
 const MainContainer = () => {
   return (
@@ -12,10 +13,14 @@ const MainContainer = () => {
       <Header>
         <Logo />
       </Header>
-      <FilmList />
-      {/* <FilmDate /> */}
-      {/* <SelectSeats />
-      <Resume /> */}
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<FilmList />} />
+          <Route path="/film-date/:filmID" element={<FilmDate />} />
+          <Route path="/select-seats/:sessionID" element={<SelectSeats />} />
+          <Route path="/resume" element={<Resume />} />
+        </Routes>
+      </BrowserRouter>
     </Container>
   )
 }
