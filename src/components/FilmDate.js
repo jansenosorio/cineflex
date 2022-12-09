@@ -4,13 +4,13 @@ import axios from 'axios'
 import { Link, useParams } from 'react-router-dom'
 
 const FilmDate = props => {
-  const { filmID } = useParams()
+  const { idFilme } = useParams()
   const [daysOfSession, setDaysOfSession] = useState([])
   const [film, setFilm] = useState([])
 
   useEffect(() => {
     const promise = axios.get(
-      `https://mock-api.driven.com.br/api/v8/cineflex/movies/${filmID}/showtimes`
+      `https://mock-api.driven.com.br/api/v8/cineflex/movies/${idFilme}/showtimes`
     )
     promise.then(elm => {
       setDaysOfSession(elm.data.days)
@@ -27,7 +27,7 @@ const FilmDate = props => {
             {elm.weekday} - {elm.date}
           </p>
           {elm.showtimes.map(elm => (
-            <Link to={`/select-seats/${elm.id}`}>
+            <Link to={`/assentos/${elm.id}`}>
               <button key={elm.id} data-test="showtime">
                 {elm.name}
               </button>

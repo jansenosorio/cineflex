@@ -4,13 +4,13 @@ import styled from 'styled-components'
 import axios from 'axios'
 
 const SelectSeats = props => {
-  const { sessionID } = useParams()
+  const { idSessao } = useParams()
   const [seatArrays, setSeatArray] = useState([])
   const [isClicked, setIsClicked] = useState([])
 
   useEffect(() => {
     const promise = axios.get(
-      `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${sessionID}/seats`
+      `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`
     )
     promise.then(elm => setSeatArray(elm.data.seats))
     promise.catch(err => console.log(err))

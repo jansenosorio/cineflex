@@ -25,8 +25,8 @@ const FilmList = props => {
 
       <List>
         {filmList.map(elm => (
-          <Link to={`/film-date/${elm.id}`}>
-            <div key={elm} data-test="movie">
+          <Link to={`/sessoes/${elm.id}`}>
+            <div data-test="movie" key={elm}>
               <img src={elm.posterURL}></img>
             </div>
           </Link>
