@@ -14,7 +14,7 @@ const SelectSeats = props => {
     )
     promise.then(elm => setSeatArray(elm.data.seats))
     promise.catch(err => console.log(err))
-  })
+  }, [])
 
   const handleClick = elm => {
     if (!isClicked.includes(elm)) {

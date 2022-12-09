@@ -16,7 +16,7 @@ const FilmDate = props => {
       setDaysOfSession(elm.data.days)
       setFilm(elm.data)
     })
-  })
+  }, [])
 
   return (
     <>

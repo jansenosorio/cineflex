@@ -17,7 +17,7 @@ const FilmList = props => {
     promise.catch(() =>
       console.log('Houve algum erro, favor recarregar a página')
     )
-  })
+  }, [])
 
   return (
     <Container>
