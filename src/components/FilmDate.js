@@ -111,7 +111,7 @@ const Footer = styled.div`
   p {
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
-    font-size: 26px;
+    font-size: 20px;
     line-height: 30px;
     color: #293845;
   }
