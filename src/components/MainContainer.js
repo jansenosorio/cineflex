@@ -18,7 +18,7 @@ const MainContainer = () => {
           <Route path="/" element={<FilmList />} />
           <Route path="/sessoes/:idFilme" element={<FilmDate />} />
           <Route path="/assentos/:idSessao" element={<SelectSeats />} />
-          <Route path="/resume" element={<Resume />} />
+          <Route path="/sucesso" element={<Resume />} />
         </Routes>
       </BrowserRouter>
     </Container>

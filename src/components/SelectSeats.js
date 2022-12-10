@@ -16,11 +16,23 @@ const SelectSeats = props => {
     promise.catch(err => console.log(err))
   }, [])
 
-  const handleClick = elm => {
-    if (!isClicked.includes(elm)) {
-      const newIsClicked = [...isClicked, elm]
-      setIsClicked(newIsClicked)
-      console.log(newIsClicked)
+  const handleClick = (e, btnAvlb) => {
+    if (!isClicked.includes(e)) {
+      if (btnAvlb === false) {
+        alert('Este assento já foi selecionado, escolha outro.')
+      } else {
+        const newIsClicked = [...isClicked, e]
+        setIsClicked(newIsClicked)
+      }
+    } else {
+      const newArrIsClicked = [...isClicked]
+      let newArr = []
+      newArrIsClicked.forEach(elm => {
+        if (e !== elm) {
+          newArr = [...newArr, elm]
+        }
+      })
+      setIsClicked(newArr)
     }
   }
   return (
@@ -37,12 +49,10 @@ const SelectSeats = props => {
                 ? '#C3CFD9'
                 : '#FBE192'
             }
-            onClick={() => handleClick(elm.name)}
+            onClick={() => handleClick(elm.name, elm.isAvailable)}
             data-test="seat"
           >
-            <button disabled={elm.isAvailable !== true ? true : false}>
-              {elm.name}
-            </button>
+            <button>{elm.name}</button>
           </Seats>
         ))}
       </ContainerSeats>
