@@ -19,8 +19,8 @@ const Forms = props => {
       'https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many',
       resumeArr
     )
-    promise.then(elm => console.log(elm))
-    promise.catch(elm => console.log(elm))
+    promise.then(elm => localStorage.setItem('status', elm.status))
+    promise.catch(elm => localStorage.setItem('status', elm.status))
   }
 
   return (
