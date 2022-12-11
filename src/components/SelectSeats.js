@@ -11,6 +11,7 @@ const SelectSeats = props => {
   const [filmInfo, setFilmInfo] = useState([])
   const [filmDate, setFilmDate] = useState([])
   const [filmHour, setFilmHour] = useState([])
+  const [seatId, setSeatId] = useState([])
 
   useEffect(() => {
     const promise = axios.get(
@@ -25,24 +26,44 @@ const SelectSeats = props => {
     promise.catch(err => console.log('Deu algo errado, favor verificar'))
   }, [])
 
-  const handleClick = (e, btnAvlb) => {
+  const handleClick = (e, btnAvlb, elmID) => {
     if (!isClicked.includes(e)) {
       if (btnAvlb === false) {
         alert('Este assento já foi selecionado, escolha outro.')
       } else {
         const newIsClicked = [...isClicked, e]
         setIsClicked(newIsClicked)
+        const newSeatId = [...seatId, elmID]
+        setSeatId(newSeatId)
+        localStorage.setItem('seats', JSON.stringify(newIsClicked))
+        localStorage.setItem('seatsid', JSON.stringify(newSeatId))
       }
     } else {
       const newArrIsClicked = [...isClicked]
       let newArr = []
+      const ArrSeatId = [...seatId]
+      let newArrSeatId = []
       newArrIsClicked.forEach(elm => {
         if (e !== elm) {
           newArr = [...newArr, elm]
         }
       })
+
+      ArrSeatId.forEach(elm => {
+        if (elmID !== elm) {
+          newArrSeatId = [...newArrSeatId, elm]
+        }
+      })
       setIsClicked(newArr)
+      setSeatId(newArrSeatId)
+      localStorage.setItem('seats', JSON.stringify(newArr))
+      localStorage.setItem('seatsid', JSON.stringify(newArrSeatId))
     }
+
+    localStorage.setItem('movie', filmInfo.title)
+    localStorage.setItem('day', filmDate.date)
+    localStorage.setItem('weekday', filmDate.weekday)
+    localStorage.setItem('hour', filmHour)
   }
   return (
     <>
@@ -58,7 +79,7 @@ const SelectSeats = props => {
                 ? '#C3CFD9'
                 : '#FBE192'
             }
-            onClick={() => handleClick(elm.name, elm.isAvailable)}
+            onClick={() => handleClick(elm.name, elm.isAvailable, elm.id)}
             data-test="seat"
           >
             <button>{elm.name}</button>

@@ -1,16 +1,31 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 const Forms = props => {
   const [name, setName] = useState('')
   const [CPF, setCPF] = useState('')
 
-  const handleClick = () => {}
+  const handleClick = e => {
+    const nameOfClient = name
+    const cpfOfClient = CPF
+    localStorage.setItem('name', nameOfClient)
+    localStorage.setItem('cpf', cpfOfClient)
+    const seatsId = JSON.parse(localStorage.getItem('seatsid'))
+    const resumeArr = { ids: seatsId, name: nameOfClient, cpf: cpfOfClient }
+
+    const promise = axios.post(
+      'https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many',
+      resumeArr
+    )
+    promise.then(elm => console.log(elm))
+    promise.catch(elm => console.log(elm))
+  }
 
   return (
     <MyForm>
-      <form onSubmit={handleClick}>
+      <form>
         <label>
           Nome do Comprador:
           <input
@@ -36,6 +51,7 @@ const Forms = props => {
             type="submit"
             value="Reservar assento(s)"
             data-test="book-seat-btn"
+            onClick={e => handleClick(e)}
           ></input>
         </Link>
       </form>
